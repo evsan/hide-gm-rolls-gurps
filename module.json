@@ -1,15 +1,18 @@
 {
   "id": "hide-gm-rolls",
   "name": "hide-gm-rolls",
-  "title": "Hide GM Rolls",
-  "description": "<p>Some GMs prefer to limit the information that players receive, to maintain the mystery. For example you may wish to hide the bonuses that your legendary creature gets on its rolls, or to roll truly in the blind when an event occurs, without alerting your players to it.</p><p>This module allows sanitizing public GM rolls by hiding formulas and breakdowns from players, showing just the total instead. It can also hide private GM rolls from players entirely.</p>",
+  "title": "Hide GM Rolls for GURPS",
+  "description": "Copy of Hide GM Rolls <p>Some GMs prefer to limit the information that players receive, to maintain the mystery. For example you may wish to hide the bonuses that your legendary creature gets on its rolls, or to roll truly in the blind when an event occurs, without alerting your players to it.</p><p>This module allows sanitizing public GM rolls by hiding formulas and breakdowns from players, showing just the total instead. It can also hide private GM rolls from players entirely.</p>",
   "authors": [
     {
       "name": "sPOiDar",
       "url": "https://github.com/sPOiDar/"
+    },
+    {
+      "name": "Andrei"
     }
   ],
-  "version": "0.15.3",
+  "version": "0.16",
   "minimumCoreVersion": "0.6.5",
   "compatibleCoreVersion": "11",
   "compatibility": {
@@ -28,26 +31,6 @@
       "lang": "en",
       "name": "English",
       "path": "lang/en.json"
-    },
-    {
-      "lang": "de",
-      "name": "Deutsch",
-      "path": "lang/de.json"
-    },
-    {
-      "lang": "pt-BR",
-      "name": "Português (Brasil)",
-      "path": "lang/pt_BR.json"
-    },
-    {
-      "lang": "it",
-      "name": "Italiano",
-      "path": "lang/it.json"
-    },
-    {
-      "lang": "pl",
-      "name": "polski",
-      "path": "lang/pl.json"
     }
   ],
   "dependencies": [
@@ -69,9 +52,6 @@
   },
   "license": "LICENSE",
   "readme": "README.md",
-  "url": "https://github.com/sPOiDar/fvtt-module-hide-gm-rolls",
-  "bugs": "https://github.com/sPOiDar/fvtt-module-hide-gm-rolls/issues",
-  "changelog": "https://github.com/sPOiDar/fvtt-module-hide-gm-rolls/blob/master/CHANGELOG.md",
-  "manifest": "https://github.com/sPOiDar/fvtt-module-hide-gm-rolls/raw/master/module.json",
-  "download": "https://github.com/sPOiDar/fvtt-module-hide-gm-rolls/releases/download/v0.15.3/hide-gm-rolls-v0.15.3.zip"
+  "url": "https://github.com/evsan/hide-gm-rolls-gurps",
+  "manifest": "https://github.com/evsan/hide-gm-rolls-gurps/raw/master/module.json"
 }

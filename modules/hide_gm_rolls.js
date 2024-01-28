@@ -20,36 +20,6 @@ class HideGMRolls {
 			type: Boolean,
 		});
 
-		game.settings.register('hide-gm-rolls', 'sanitize-crit-fail', {
-			name: game.i18n.localize('hide-gm-rolls.settings.sanitize-crit-fail.name'),
-			hint: game.i18n.localize('hide-gm-rolls.settings.sanitize-crit-fail.hint'),
-			scope: 'world',
-			config: true,
-			restricted: true,
-			default: true,
-			type: Boolean,
-		});
-
-		game.settings.register('hide-gm-rolls', 'sanitize-better-rolls-crit-dmg', {
-			name: game.i18n.localize('hide-gm-rolls.settings.sanitize-better-rolls-crit-dmg.name'),
-			hint: game.i18n.localize('hide-gm-rolls.settings.sanitize-better-rolls-crit-dmg.hint'),
-			scope: 'world',
-			config: true,
-			restricted: true,
-			default: true,
-			type: Boolean,
-		});
-
-		game.settings.register('hide-gm-rolls', 'sanitize-ready-set-roll-crit-dmg', {
-			name: game.i18n.localize('hide-gm-rolls.settings.sanitize-ready-set-roll-crit-dmg.name'),
-			hint: game.i18n.localize('hide-gm-rolls.settings.sanitize-ready-set-roll-crit-dmg.hint'),
-			scope: 'world',
-			config: true,
-			restricted: true,
-			default: true,
-			type: Boolean,
-		});
-
 		game.settings.register('hide-gm-rolls', 'hide-private-rolls', {
 			name: game.i18n.localize('hide-gm-rolls.settings.hide-private-rolls.name'),
 			hint: game.i18n.localize('hide-gm-rolls.settings.hide-private-rolls.hint'),
@@ -63,16 +33,6 @@ class HideGMRolls {
 		game.settings.register('hide-gm-rolls', 'hide-player-rolls', {
 			name: game.i18n.localize('hide-gm-rolls.settings.hide-player-rolls.name'),
 			hint: game.i18n.localize('hide-gm-rolls.settings.hide-player-rolls.hint'),
-			scope: 'world',
-			config: true,
-			restricted: true,
-			default: false,
-			type: Boolean,
-		});
-
-		game.settings.register('hide-gm-rolls', 'hide-item-description', {
-			name: game.i18n.localize('hide-gm-rolls.settings.hide-item-description.name'),
-			hint: game.i18n.localize('hide-gm-rolls.settings.hide-item-description.hint'),
 			scope: 'world',
 			config: true,
 			restricted: true,
@@ -180,95 +140,6 @@ class HideGMRolls {
 		html.hide();
 	}
 
-	static _sanitizeCrits(html) {
-		if (!game.settings.get('hide-gm-rolls', 'sanitize-crit-fail')) {
-			return;
-		}
-		const total = html.find('h4.dice-total');
-		if (total) {
-			total.removeClass('critical');
-			total.removeClass('fumble');
-		}
-	}
-
-	static _sanitizeBetterRolls5e(html) {
-		if (!game.modules.get('betterrolls5e')?.active) {
-			return;
-		}
-		if (game.settings.get('hide-gm-rolls', 'sanitize-crit-fail')) {
-			const success = html.find('.success');
-			if (success) success.removeClass('success');
-			const failure = html.find('.failure');
-			if (failure) failure.removeClass('failure');
-			const flavor = html.find('.flavor-text.inline');
-			if (flavor) flavor.remove();
-		}
-
-		const dieIcon = html.find('.dice-total .die-icon').remove();
-		if (dieIcon) dieIcon.remove();
-
-		if (game.settings.get('hide-gm-rolls', 'sanitize-better-rolls-crit-dmg')) {
-			const total = html.find('.dice-total.red-damage');
-			if (!total || total.length === 0) return;
-			const base = total.find('.red-base-damage');
-			const crit = total.find('.red-crit-damage');
-			if (!base || !crit || base.length === 0 || crit.length === 0) return;
-			const sum = parseInt(base.data('value')) + parseInt(crit.data('value'));
-			total.empty();
-			total.text(sum);
-		}
-	}
-
-	static _sanitizeReadySetRoll5e(html) {
-		if (!game.modules.get('ready-set-roll-5e')?.active) {
-			return;
-		}
-
-		if (game.settings.get('hide-gm-rolls', 'sanitize-crit-fail')) {
-			const success = html.find('.success');
-			if (success) success.removeClass('success');
-			const failure = html.find('.failure');
-			if (failure) failure.removeClass('failure');
-		}
-
-		const dieIcon = html.find('.dice-total .die-icon').remove();
-		if (dieIcon) dieIcon.remove();
-
-		if (game.settings.get('hide-gm-rolls', 'sanitize-ready-set-roll-crit-dmg')) {
-			const crits = html.find('.rsr-damage > .rsr-crit-damage');
-			if (!crits || crits.length === 0) return;
-			crits.each((_, crit) => {
-				const total = crit.parentElement;
-				const base = total.querySelector('.rsr-base-damage');
-				if (!base) {
-					return;
-				}
-				const label = total.querySelector('.rsr5e-roll-label');
-				if (label) {
-					label.remove();
-				}
-				const sum = parseInt(base.dataset.value) + parseInt(crit.dataset.value);
-				base.dataset.value = sum;
-				base.textContent = sum;
-				total.replaceChildren(base);
-			});
-		}
-	}
-
-	static _sanitizePF2e(html) {
-		if (game.system.id !== 'pf2e') {
-			return;
-		}
-		const tags = html.find('.flavor-text div.tags');
-		if (tags) {
-			tags.remove();
-		}
-		const dmgTags = html.find('.flavor-text span.damage-tag');
-		if (dmgTags) {
-			dmgTags.remove();
-		}
-	}
-
 	static sanitizeRoll(html, msg) {
 		if (!game.settings.get('hide-gm-rolls', 'sanitize-rolls')) return;
 
@@ -276,29 +147,18 @@ class HideGMRolls {
 		if (this.isGMMessage(msg)) {
 			return;
 		}
-		const formula = html.find('div.dice-formula');
-		if (formula) {
-			formula.remove();
+		const prefix = html.find('div.roll-message .prefix');
+		if (prefix) {
+			prefix.remove();
 		}
-		const tooltip = html.find('div.dice-tooltip');
-		if (tooltip) {
-			tooltip.remove();
+		const details = html.find('div.roll-message .roll-detail');
+		if (details) {
+			details.remove();
 		}
-		this._sanitizeCrits(html);
-		this._sanitizeBetterRolls5e(html);
-		this._sanitizeReadySetRoll5e(html);
-		this._sanitizePF2e(html);
-	}
-
-	static sanitizeCard(html, msg) {
-		if (this.isGMMessage(msg)) return;
-		if (game.settings.get('hide-gm-rolls', 'hide-item-description')) {
-			const description = html.find('div.item-card div.card-content');
-			if (description) {
-				description.empty();
-				description.addClass('gm-roll-hidden');
-			}
-		}
+		const rollInfo = html.find('div.roll-message .roll-result div:nth-child(2)');
+		if (rollInfo) {
+			rollInfo.remove();
+		} 
 	}
 
 	static mangleRoll(doc) {
@@ -344,20 +204,15 @@ Hooks.on('preCreateChatMessage', (doc, _data, _options) => {
 Hooks.on('renderChatMessage', (app, html, msg) => {
 	HideGMRolls.hideRoll(app, html, msg);
 	HideGMRolls.sanitizeRoll(html, msg);
-	HideGMRolls.sanitizeCard(html, msg);
 });
 
 Hooks.on('updateChatMessage', (msg, _data, _diff, id) => {
-	if (
-		!game.settings.get('hide-gm-rolls', 'sanitize-rolls') &&
-		!game.settings.get('hide-gm-rolls', 'hide-item-description')
-	) {
+	if (!game.settings.get('hide-gm-rolls', 'sanitize-rolls')) {
 		return;
 	}
 
 	const html = $(`li.message[data-message-id="${id}"]`);
 	HideGMRolls.sanitizeRoll(html, msg);
-	HideGMRolls.sanitizeCard(html, msg);
 });
 
 Hooks.on('diceSoNiceRollStart', (_, context) => {
