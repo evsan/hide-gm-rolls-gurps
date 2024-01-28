@@ -148,7 +148,7 @@ class HideGMRolls {
 			return;
 		}
 		const rollMessage = html.find('div.roll-message');
-		const rollDetails = html.find('div.roll-message .aside');
+		const rollDetails = html.find('div.roll-message .roll-result div::nth-child(2) .aside');
 		if (rollMessage && rollDetails) {
 			rollMessage.html('<div class="roll-result">' + rollDetails.html() + '</div>');
 		}
