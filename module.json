@@ -12,7 +12,7 @@
       "name": "Andrei"
     }
   ],
-  "version": "0.16",
+  "version": "0.16.0",
   "minimumCoreVersion": "0.6.5",
   "compatibleCoreVersion": "11",
   "compatibility": {
@@ -53,5 +53,6 @@
   "license": "LICENSE",
   "readme": "README.md",
   "url": "https://github.com/evsan/hide-gm-rolls-gurps",
-  "manifest": "https://github.com/evsan/hide-gm-rolls-gurps/raw/master/module.json"
+  "manifest": "https://github.com/evsan/hide-gm-rolls-gurps/raw/master/module.json",
+  "download": "https://github.com/evsan/hide-gm-rolls-gurps/archive/refs/tags/v0.16.0.zip"
 }
