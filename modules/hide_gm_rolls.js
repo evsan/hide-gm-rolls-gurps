@@ -150,8 +150,7 @@ class HideGMRolls {
 		const rollMessage = html.find('div.roll-message');
 		const rollValue = html.find('div.roll-message .roll-value');
 		const rollDetails = html.find('div.roll-message .roll-result div:nth-child(2) .aside');
-		console.log("DEBUG", rollMessage, rollValue, rollDetails);
-		if (!!rollMessage && !!rollValue && !!rollDetails) {
+		if (rollMessage.length && rollValue.length && rollDetails.length) {
 			rollMessage.html('<div class="roll-result"><div><span class="roll-value">'+rollValue.html()+'</span></div><div><hr><div class="aside">' + rollDetails.html() + '</div></div></div>');
 		}
 	}
