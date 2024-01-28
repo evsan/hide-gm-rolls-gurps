@@ -148,18 +148,10 @@ class HideGMRolls {
 			return;
 		}
 		const rollMessage = html.find('div.roll-message');
-		const rollDetails = html.find('div.roll-message .roll-result .aside');
+		const rollDetails = html.find('div.roll-message .aside');
 		if (rollMessage && rollDetails) {
-			rollMessage.html(rollDetails.outerHTML);
+			rollMessage.html('<div class="roll-result">' + rollDetails.html() + '</div>');
 		}
-		const details = html.find('div.roll-message .roll-detail');
-		if (details) {
-			details.remove();
-		}
-		const rollInfo = html.find('div.roll-message .roll-result div:nth-child(2)');
-		if (rollInfo) {
-			rollInfo.remove();
-		} 
 	}
 
 	static mangleRoll(doc) {
