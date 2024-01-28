@@ -147,9 +147,10 @@ class HideGMRolls {
 		if (this.isGMMessage(msg)) {
 			return;
 		}
-		const prefix = html.find('div.roll-message .prefix');
-		if (prefix) {
-			prefix.remove();
+		const rollMessage = html.find('div.roll-message');
+		const rollDetails = html.find('div.roll-message .roll-result .aside');
+		if (rollMessage && rollDetails) {
+			rollMessage.html(rollDetails.outerHTML);
 		}
 		const details = html.find('div.roll-message .roll-detail');
 		if (details) {
